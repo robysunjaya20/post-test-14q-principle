@@ -13,98 +13,203 @@ const DEPARTMENTS = [
 
 const TOTAL_SOAL = 14;
 
+type ResultData = {
+  benar: number;
+  salah: number;
+  total: number;
+  nilai: number;
+  detail: boolean[];
+};
+
 export default function Home() {
+  // =========================================
+  // DATA KARYAWAN
+  // =========================================
+
   const [nama, setNama] = useState("");
+  const [nik, setNik] = useState("");
   const [department, setDepartment] = useState("");
   const [tanggal, setTanggal] = useState("");
+
+  // =========================================
+  // STATUS TEST
+  // =========================================
+
+  const [testStarted, setTestStarted] =
+    useState(false);
+
+  const [submitted, setSubmitted] =
+    useState(false);
+
+  // =========================================
+  // JAWABAN
+  // =========================================
 
   const [answers, setAnswers] = useState<string[]>(
     Array(TOTAL_SOAL).fill("")
   );
 
-  const [currentQuestion, setCurrentQuestion] = useState(1);
+  // =========================================
+  // SOAL AKTIF
+  // =========================================
 
-  const [submitted, setSubmitted] = useState(false);
+  const [currentQuestion, setCurrentQuestion] =
+    useState(1);
 
-  const [result, setResult] = useState<{
-    benar: number;
-    salah: number;
-    total: number;
-    nilai: number;
-    detail: boolean[];
-  } | null>(null);
+  // =========================================
+  // HASIL
+  // =========================================
 
-  const [loading, setLoading] = useState(false);
+  const [result, setResult] =
+    useState<ResultData | null>(null);
 
-  const [saveStatus, setSaveStatus] = useState("");
+  // =========================================
+  // STATUS PENYIMPANAN
+  // =========================================
 
-  // ==============================
-  // TANGGAL OTOMATIS
-  // ==============================
+  const [loading, setLoading] =
+    useState(false);
+
+  const [saveStatus, setSaveStatus] =
+    useState("");
+
+  // =========================================
+  // SET TANGGAL HARI INI
+  // =========================================
 
   useEffect(() => {
     const now = new Date();
 
     const yyyy = now.getFullYear();
-    const mm = String(now.getMonth() + 1).padStart(2, "0");
-    const dd = String(now.getDate()).padStart(2, "0");
 
-    setTanggal(`${yyyy}-${mm}-${dd}`);
+    const mm = String(
+      now.getMonth() + 1
+    ).padStart(2, "0");
+
+    const dd = String(
+      now.getDate()
+    ).padStart(2, "0");
+
+    setTanggal(
+      `${yyyy}-${mm}-${dd}`
+    );
   }, []);
 
-  // ==============================
-  // NORMALIZE
-  // ==============================
+  // =========================================
+  // NORMALIZE JAWABAN
+  // =========================================
 
-  function normalizeAnswer(value: string) {
+  function normalizeAnswer(
+    value: string
+  ) {
     return value
       .trim()
       .toLowerCase()
       .replace(/\s+/g, " ");
   }
 
-  // ==============================
-  // CHECK JAWABAN
-  // ==============================
+  // =========================================
+  // CEK JAWABAN
+  // =========================================
 
   function checkAnswer(
     answer: string,
     nomor: number
   ) {
-    const normalized = normalizeAnswer(answer);
+    const normalized =
+      normalizeAnswer(answer);
 
     if (!normalized) {
       return false;
     }
 
-    const keys = KUNCI_JAWABAN[nomor - 1];
+    const keys =
+      KUNCI_JAWABAN[nomor - 1];
+
+    if (!keys) {
+      return false;
+    }
 
     return keys.some(
       (key) =>
-        normalizeAnswer(key) === normalized
+        normalizeAnswer(key) ===
+        normalized
     );
   }
 
-  // ==============================
+  // =========================================
   // UPDATE JAWABAN
-  // ==============================
+  // =========================================
 
   function updateAnswer(
     value: string
   ) {
+    if (submitted) {
+      return;
+    }
+
     setAnswers((prev) => {
       const next = [...prev];
-      next[currentQuestion - 1] = value;
+
+      next[currentQuestion - 1] =
+        value;
+
       return next;
     });
   }
 
-  // ==============================
-  // NEXT
-  // ==============================
+  // =========================================
+  // MULAI POST TEST
+  // =========================================
+
+  function handleStartTest() {
+    if (!nama.trim()) {
+      alert(
+        "Silakan isi Nama terlebih dahulu."
+      );
+      return;
+    }
+
+    if (!nik.trim()) {
+      alert(
+        "Silakan isi NIK terlebih dahulu."
+      );
+      return;
+    }
+
+    if (!department) {
+      alert(
+        "Silakan pilih Department terlebih dahulu."
+      );
+      return;
+    }
+
+    if (!tanggal) {
+      alert(
+        "Silakan pilih Tanggal."
+      );
+      return;
+    }
+
+    setTestStarted(true);
+
+    setCurrentQuestion(1);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
+  // =========================================
+  // SOAL BERIKUTNYA
+  // =========================================
 
   function nextQuestion() {
-    if (currentQuestion < TOTAL_SOAL) {
+    if (
+      currentQuestion <
+      TOTAL_SOAL
+    ) {
       setCurrentQuestion(
         currentQuestion + 1
       );
@@ -116,12 +221,14 @@ export default function Home() {
     }
   }
 
-  // ==============================
-  // PREVIOUS
-  // ==============================
+  // =========================================
+  // SOAL SEBELUMNYA
+  // =========================================
 
   function previousQuestion() {
-    if (currentQuestion > 1) {
+    if (
+      currentQuestion > 1
+    ) {
       setCurrentQuestion(
         currentQuestion - 1
       );
@@ -133,44 +240,115 @@ export default function Home() {
     }
   }
 
-  // ==============================
-  // SUBMIT
-  // ==============================
+  // =========================================
+  // PILIH NOMOR SOAL
+  // =========================================
+
+  function goToQuestion(
+    nomor: number
+  ) {
+    setCurrentQuestion(nomor);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
+  // =========================================
+  // SUBMIT POST TEST
+  // =========================================
 
   function handleSubmit() {
     if (!nama.trim()) {
-      alert("Silakan isi nama terlebih dahulu.");
-      return;
-    }
-
-    if (!department) {
-      alert("Silakan pilih Department.");
-      return;
-    }
-
-    const kosong = answers.some(
-      (answer) => !answer.trim()
-    );
-
-    if (kosong) {
       alert(
-        "Semua soal harus dijawab terlebih dahulu."
+        "Nama belum diisi."
       );
       return;
     }
 
-    const detail = answers.map(
-      (answer, index) =>
-        checkAnswer(answer, index + 1)
-    );
+    if (!nik.trim()) {
+      alert(
+        "NIK belum diisi."
+      );
+      return;
+    }
 
-    const benar = detail.filter(Boolean).length;
+    if (!department) {
+      alert(
+        "Department belum dipilih."
+      );
+      return;
+    }
 
-    const salah = TOTAL_SOAL - benar;
+    if (!tanggal) {
+      alert(
+        "Tanggal belum dipilih."
+      );
+      return;
+    }
 
-    const nilai = Math.round(
-      (benar / TOTAL_SOAL) * 100
-    );
+    // Cek apakah masih ada soal kosong
+    const soalKosong =
+      answers.some(
+        (answer) =>
+          !answer.trim()
+      );
+
+    if (soalKosong) {
+      const nomorKosong =
+        answers.findIndex(
+          (answer) =>
+            !answer.trim()
+        ) + 1;
+
+      setCurrentQuestion(
+        nomorKosong
+      );
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+
+      alert(
+        `Soal nomor ${nomorKosong} belum dijawab.`
+      );
+
+      return;
+    }
+
+    // =====================================
+    // HITUNG HASIL
+    // =====================================
+
+    const detail =
+      answers.map(
+        (answer, index) =>
+          checkAnswer(
+            answer,
+            index + 1
+          )
+      );
+
+    const benar =
+      detail.filter(
+        Boolean
+      ).length;
+
+    const salah =
+      TOTAL_SOAL - benar;
+
+    const nilai =
+      Math.round(
+        (benar /
+          TOTAL_SOAL) *
+          100
+      );
+
+    // =====================================
+    // TAMPILKAN HASIL SEGERA
+    // =====================================
 
     setResult({
       benar,
@@ -187,43 +365,66 @@ export default function Home() {
       behavior: "smooth",
     });
 
-    // ==============================
-    // SIMPAN BACKGROUND
-    // ==============================
+    // =====================================
+    // SIMPAN KE GOOGLE SHEETS
+    // =====================================
 
     setLoading(true);
-    setSaveStatus("Menyimpan jawaban...");
 
-    void fetch("/api/submit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        nama,
-        department,
-        tanggal,
-        q14Answers: answers,
-        benar,
-        salah,
-        total: TOTAL_SOAL,
-        nilai,
-      }),
-    })
-      .then(async (response) => {
-        const data = await response.json();
+    setSaveStatus(
+      "Menyimpan jawaban..."
+    );
 
-        if (!response.ok || !data.success) {
-          throw new Error(
-            data.message ||
-              "Gagal menyimpan data."
+    void fetch(
+      "/api/submit",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
+
+        body: JSON.stringify({
+          nama,
+          nik,
+          department,
+          tanggal,
+
+          q14Answers:
+            answers,
+
+          benar,
+
+          salah,
+
+          total:
+            TOTAL_SOAL,
+
+          nilai,
+        }),
+      }
+    )
+      .then(
+        async (response) => {
+          const data =
+            await response.json();
+
+          if (
+            !response.ok ||
+            !data.success
+          ) {
+            throw new Error(
+              data.message ||
+                "Gagal menyimpan data."
+            );
+          }
+
+          setSaveStatus(
+            "✓ Jawaban berhasil disimpan."
           );
         }
-
-        setSaveStatus(
-          "✓ Jawaban berhasil disimpan."
-        );
-      })
+      )
       .catch(() => {
         setSaveStatus(
           "⚠ Hasil sudah ditampilkan, tetapi penyimpanan gagal."
@@ -234,35 +435,52 @@ export default function Home() {
       });
   }
 
-  // ==============================
-  // RESET
-  // ==============================
+  // =========================================
+  // TEST BARU
+  // =========================================
 
   function handleReset() {
     setNama("");
+
+    setNik("");
+
     setDepartment("");
 
+    // Tanggal kembali ke hari ini
     const now = new Date();
 
-    const yyyy = now.getFullYear();
-    const mm = String(
-      now.getMonth() + 1
-    ).padStart(2, "0");
-    const dd = String(
-      now.getDate()
-    ).padStart(2, "0");
+    const yyyy =
+      now.getFullYear();
 
-    setTanggal(`${yyyy}-${mm}-${dd}`);
+    const mm =
+      String(
+        now.getMonth() + 1
+      ).padStart(2, "0");
+
+    const dd =
+      String(
+        now.getDate()
+      ).padStart(2, "0");
+
+    setTanggal(
+      `${yyyy}-${mm}-${dd}`
+    );
 
     setAnswers(
-      Array(TOTAL_SOAL).fill("")
+      Array(
+        TOTAL_SOAL
+      ).fill("")
     );
 
     setCurrentQuestion(1);
 
+    setTestStarted(false);
+
     setSubmitted(false);
 
     setResult(null);
+
+    setLoading(false);
 
     setSaveStatus("");
 
@@ -272,19 +490,30 @@ export default function Home() {
     });
   }
 
+  // =========================================
+  // PROGRESS
+  // =========================================
+
   const progress =
-    (currentQuestion / TOTAL_SOAL) * 100;
+    (currentQuestion /
+      TOTAL_SOAL) *
+    100;
+
+  // =========================================
+  // RENDER
+  // =========================================
 
   return (
     <main className="postPage">
 
-      {/* =========================
+      {/* =====================================
           HEADER
-      ========================= */}
+      ===================================== */}
 
       <header className="postHeader">
 
         <div className="brandBox">
+
           <div className="brandMain">
             BUMJIN
           </div>
@@ -292,9 +521,12 @@ export default function Home() {
           <div className="brandSub">
             QUALITY TRAINING
           </div>
+
         </div>
 
+
         <div className="headerTitle">
+
           <div className="smallTitle">
             14Q BASICS PRINCIPLE
           </div>
@@ -306,14 +538,15 @@ export default function Home() {
           <p>
             Evaluasi pemahaman peserta
           </p>
+
         </div>
 
       </header>
 
 
-      {/* =========================
-          RESULT
-      ========================= */}
+      {/* =====================================
+          HASIL TEST
+      ===================================== */}
 
       {result && (
         <section className="resultCard">
@@ -330,54 +563,73 @@ export default function Home() {
             NILAI
           </div>
 
+
           <div className="resultStats">
 
             <div>
               <strong>
                 {result.benar}
               </strong>
-              <span>Benar</span>
+
+              <span>
+                Benar
+              </span>
             </div>
+
 
             <div>
               <strong>
                 {result.salah}
               </strong>
-              <span>Salah</span>
+
+              <span>
+                Salah
+              </span>
             </div>
+
 
             <div>
               <strong>
                 {result.total}
               </strong>
-              <span>Total Soal</span>
+
+              <span>
+                Total Soal
+              </span>
             </div>
 
           </div>
 
+
           <div className="resultMessage">
+
             {result.nilai >= 80
               ? "✓ Selamat, hasil Anda sangat baik."
               : "Tetap semangat dan tingkatkan pemahaman Anda."}
+
           </div>
 
         </section>
       )}
 
 
-      {/* =========================
-          PARTICIPANT
-      ========================= */}
+      {/* =====================================
+          DATA KARYAWAN
+      ===================================== */}
 
       <section className="participantCard">
 
         <div className="sectionTitle">
-          DATA PESERTA
+          DATA KARYAWAN
         </div>
+
 
         <div className="participantGrid">
 
+          {/* NAMA */}
+
           <div className="fieldGroup fieldName">
+
             <label>
               Nama
             </label>
@@ -386,15 +638,50 @@ export default function Home() {
               type="text"
               value={nama}
               onChange={(e) =>
-                setNama(e.target.value)
+                setNama(
+                  e.target.value
+                )
               }
-              disabled={submitted}
+              disabled={
+                testStarted
+              }
               placeholder="Masukkan nama lengkap"
+              autoComplete="name"
             />
+
           </div>
 
 
+          {/* NIK */}
+
           <div className="fieldGroup">
+
+            <label>
+              NIK
+            </label>
+
+            <input
+              type="text"
+              value={nik}
+              onChange={(e) =>
+                setNik(
+                  e.target.value
+                )
+              }
+              disabled={
+                testStarted
+              }
+              placeholder="Masukkan NIK"
+              autoComplete="off"
+            />
+
+          </div>
+
+
+          {/* DEPARTMENT */}
+
+          <div className="fieldGroup">
+
             <label>
               Department
             </label>
@@ -402,10 +689,15 @@ export default function Home() {
             <select
               value={department}
               onChange={(e) =>
-                setDepartment(e.target.value)
+                setDepartment(
+                  e.target.value
+                )
               }
-              disabled={submitted}
+              disabled={
+                testStarted
+              }
             >
+
               <option value="">
                 Pilih Department
               </option>
@@ -420,11 +712,16 @@ export default function Home() {
                   </option>
                 )
               )}
+
             </select>
+
           </div>
 
 
+          {/* TANGGAL */}
+
           <div className="fieldGroup">
+
             <label>
               Tanggal
             </label>
@@ -432,238 +729,352 @@ export default function Home() {
             <input
               type="date"
               value={tanggal}
-              readOnly
+              onChange={(e) =>
+                setTanggal(
+                  e.target.value
+                )
+              }
+              disabled={
+                testStarted
+              }
             />
+
           </div>
 
         </div>
 
+
+        {/* =================================
+            MULAI POST TEST
+        ================================= */}
+
+        {!testStarted && (
+
+          <button
+            type="button"
+            className="startTestButton"
+            onClick={
+              handleStartTest
+            }
+          >
+            MULAI POST TEST →
+          </button>
+
+        )}
+
       </section>
 
 
-      {/* =========================
-          QUESTION AREA
-      ========================= */}
+      {/* =====================================
+          TEST
+      ===================================== */}
 
-      <section className="testCard">
+      {testStarted && (
 
-        {!submitted && (
-          <>
-            <div className="progressHeader">
+        <section className="testCard">
 
-              <div>
-                <strong>
-                  Soal {currentQuestion}
-                </strong>
+          {/* PROGRESS */}
 
-                <span>
-                  {" "}
-                  dari {TOTAL_SOAL}
-                </span>
+          {!submitted && (
+
+            <>
+
+              <div className="progressHeader">
+
+                <div>
+
+                  <strong>
+                    Soal{" "}
+                    {currentQuestion}
+                  </strong>
+
+                  <span>
+                    {" "}
+                    dari{" "}
+                    {TOTAL_SOAL}
+                  </span>
+
+                </div>
+
+
+                <div className="progressPercent">
+                  {Math.round(
+                    progress
+                  )}
+                  %
+                </div>
+
               </div>
 
-              <div className="progressPercent">
-                {Math.round(progress)}%
+
+              <div className="progressBar">
+
+                <div
+                  className="progressFill"
+                  style={{
+                    width:
+                      `${progress}%`,
+                  }}
+                />
+
               </div>
 
-            </div>
+            </>
 
-            <div className="progressBar">
-              <div
-                className="progressFill"
-                style={{
-                  width: `${progress}%`,
-                }}
-              />
-            </div>
-          </>
-        )}
+          )}
 
 
-        <SoalPostTest
-          nomor={currentQuestion}
-          jawaban={
-            answers[currentQuestion - 1]
-          }
-          submitted={submitted}
-          benar={
-            submitted && result
-              ? result.detail[
-                  currentQuestion - 1
-                ]
-              : null
-          }
-          updateJawaban={
-            updateAnswer
-          }
-        />
+          {/* SOAL */}
+
+          <SoalPostTest
+            nomor={
+              currentQuestion
+            }
+
+            jawaban={
+              answers[
+                currentQuestion - 1
+              ]
+            }
+
+            submitted={
+              submitted
+            }
+
+            benar={
+              submitted &&
+              result
+                ? result.detail[
+                    currentQuestion - 1
+                  ]
+                : null
+            }
+
+            updateJawaban={
+              updateAnswer
+            }
+          />
 
 
-        {!submitted && (
-          <div className="navigationButtons">
+          {/* =================================
+              NAVIGASI SEBELUM SUBMIT
+          ================================= */}
 
-            <button
-              type="button"
-              onClick={
-                previousQuestion
-              }
-              disabled={
-                currentQuestion === 1
-              }
-              className="btnPrevious"
-            >
-              ← Sebelumnya
-            </button>
+          {!submitted && (
 
+            <div className="navigationButtons">
 
-            {currentQuestion <
-            TOTAL_SOAL ? (
               <button
                 type="button"
                 onClick={
-                  nextQuestion
+                  previousQuestion
                 }
-                className="btnNext"
+                disabled={
+                  currentQuestion ===
+                  1
+                }
+                className="btnPrevious"
               >
-                Berikutnya →
+                ← Sebelumnya
               </button>
-            ) : (
+
+
+              {currentQuestion <
+              TOTAL_SOAL ? (
+
+                <button
+                  type="button"
+                  onClick={
+                    nextQuestion
+                  }
+                  className="btnNext"
+                >
+                  Berikutnya →
+                </button>
+
+              ) : (
+
+                <button
+                  type="button"
+                  onClick={
+                    handleSubmit
+                  }
+                  className="btnSubmit"
+                >
+                  SUBMIT POST TEST
+                </button>
+
+              )}
+
+            </div>
+
+          )}
+
+
+          {/* =================================
+              SETELAH SUBMIT
+          ================================= */}
+
+          {submitted && (
+
+            <div className="submittedActions">
+
+              {currentQuestion <
+                TOTAL_SOAL && (
+
+                <button
+                  type="button"
+                  onClick={
+                    nextQuestion
+                  }
+                  className="btnNext"
+                >
+                  Soal Berikutnya →
+                </button>
+
+              )}
+
+
               <button
                 type="button"
                 onClick={
-                  handleSubmit
+                  handleReset
                 }
-                className="btnSubmit"
+                className="btnNewTest"
               >
-                SUBMIT POST TEST
+                ISI TEST BARU
               </button>
+
+            </div>
+
+          )}
+
+        </section>
+
+      )}
+
+
+      {/* =====================================
+          DAFTAR NOMOR SOAL
+      ===================================== */}
+
+      {testStarted && (
+
+        <section className="questionNavigator">
+
+          <div className="navigatorTitle">
+            Daftar Soal
+          </div>
+
+
+          <div className="numberGrid">
+
+            {answers.map(
+              (_, index) => {
+
+                const nomor =
+                  index + 1;
+
+                let className =
+                  "numberButton";
+
+
+                // Setelah submit
+                if (
+                  submitted &&
+                  result
+                ) {
+
+                  className +=
+                    result.detail[
+                      index
+                    ]
+                      ? " numberCorrect"
+                      : " numberWrong";
+
+                }
+
+                // Soal aktif
+                else if (
+                  nomor ===
+                  currentQuestion
+                ) {
+
+                  className +=
+                    " numberActive";
+
+                }
+
+                // Sudah dijawab
+                else if (
+                  answers[
+                    index
+                  ].trim()
+                ) {
+
+                  className +=
+                    " numberAnswered";
+
+                }
+
+
+                return (
+
+                  <button
+                    key={nomor}
+                    type="button"
+                    className={
+                      className
+                    }
+                    onClick={() =>
+                      goToQuestion(
+                        nomor
+                      )
+                    }
+                  >
+                    {nomor}
+                  </button>
+
+                );
+
+              }
             )}
 
           </div>
-        )}
+
+        </section>
+
+      )}
 
 
-        {submitted && (
-          <div className="submittedActions">
+      {/* =====================================
+          STATUS PENYIMPANAN
+      ===================================== */}
 
-            <button
-              type="button"
-              onClick={() => {
-                if (
-                  currentQuestion <
-                  TOTAL_SOAL
-                ) {
-                  setCurrentQuestion(
-                    currentQuestion + 1
-                  );
-                }
-              }}
-              disabled={
-                currentQuestion ===
-                TOTAL_SOAL
-              }
-              className="btnNext"
-            >
-              Soal Berikutnya →
-            </button>
+      {saveStatus && (
 
-            <button
-              type="button"
-              onClick={
-                handleReset
-              }
-              className="btnNewTest"
-            >
-              ISI TEST BARU
-            </button>
+        <div className="saveStatus">
 
-          </div>
-        )}
+          {saveStatus}
 
-      </section>
-
-
-      {/* =========================
-          QUESTION NAVIGATOR
-      ========================= */}
-
-      <section className="questionNavigator">
-
-        <div className="navigatorTitle">
-          Daftar Soal
-        </div>
-
-        <div className="numberGrid">
-
-          {answers.map(
-            (_, index) => {
-
-              const nomor =
-                index + 1;
-
-              let className =
-                "numberButton";
-
-              if (
-                submitted &&
-                result
-              ) {
-                className +=
-                  result.detail[index]
-                    ? " numberCorrect"
-                    : " numberWrong";
-              } else if (
-                nomor ===
-                currentQuestion
-              ) {
-                className +=
-                  " numberActive";
-              } else if (
-                answers[index].trim()
-              ) {
-                className +=
-                  " numberAnswered";
-              }
-
-              return (
-                <button
-                  key={nomor}
-                  type="button"
-                  className={className}
-                  onClick={() => {
-                    setCurrentQuestion(
-                      nomor
-                    );
-
-                    window.scrollTo({
-                      top: 0,
-                      behavior: "smooth",
-                    });
-                  }}
-                >
-                  {nomor}
-                </button>
-              );
-            }
+          {loading && (
+            <span>
+              {" "}
+              Mohon tunggu...
+            </span>
           )}
 
         </div>
 
-      </section>
-
-
-      {/* =========================
-          SAVE STATUS
-      ========================= */}
-
-      {saveStatus && (
-        <div className="saveStatus">
-          {saveStatus}
-        </div>
       )}
 
 
+      {/* =====================================
+          FOOTER
+      ===================================== */}
+
       <footer className="postFooter">
+
         <strong>
           BUMJIN ELECTRONICS INDONESIA
         </strong>
@@ -671,6 +1082,7 @@ export default function Home() {
         <span>
           Quality Training Department
         </span>
+
       </footer>
 
     </main>

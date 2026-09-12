@@ -23,9 +23,9 @@ select {
 }
 
 
-/* =========================
+/* ========================================
    PAGE
-========================= */
+======================================== */
 
 .postPage {
   min-height: 100vh;
@@ -33,122 +33,164 @@ select {
 }
 
 
-/* =========================
+/* ========================================
    HEADER
-========================= */
+======================================== */
 
 .postHeader {
+  width: 100%;
+  min-height: 210px;
+
   background: #111827;
   color: white;
-  min-height: 190px;
-  padding: 35px max(20px, calc((100% - 1050px) / 2));
+
+  padding: 38px 30px;
 
   display: flex;
   align-items: center;
-  gap: 45px;
+}
+
+.postHeader > * {
+  width: 100%;
 }
 
 .brandBox {
-  min-width: 190px;
+  min-width: 225px;
+  width: auto;
+
   border-right: 1px solid #4b5563;
-  padding-right: 35px;
+
+  padding-right: 45px;
 }
 
 .brandMain {
-  font-size: 34px;
+  font-size: 38px;
   font-weight: 900;
   letter-spacing: 2px;
 }
 
 .brandSub {
-  margin-top: 5px;
-  font-size: 11px;
-  letter-spacing: 2px;
+  margin-top: 7px;
+
+  font-size: 12px;
+  letter-spacing: 3px;
+
   color: #d1d5db;
 }
 
 .headerTitle {
   flex: 1;
+  padding-left: 50px;
 }
 
 .smallTitle {
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 3px;
   color: #9ca3af;
 }
 
 .headerTitle h1 {
-  margin: 7px 0;
-  font-size: 42px;
+  margin: 6px 0;
+
+  font-size: 46px;
   line-height: 1;
+
   letter-spacing: 2px;
 }
 
 .headerTitle p {
   margin: 0;
+
+  font-size: 15px;
   color: #cbd5e1;
 }
 
 
-/* =========================
-   MAIN CARD
-========================= */
+/* ========================================
+   CONTENT WIDTH
+======================================== */
 
 .participantCard,
 .testCard,
 .questionNavigator,
-.resultCard {
-  width: min(1050px, calc(100% - 30px));
+.resultCard,
+.saveStatus,
+.postFooter {
+  width: min(1100px, calc(100% - 40px));
   margin-left: auto;
   margin-right: auto;
 }
 
+
+/* ========================================
+   DATA KARYAWAN
+======================================== */
+
 .participantCard {
-  margin-top: 25px;
+  margin-top: 28px;
+
   background: white;
-  border-radius: 16px;
-  padding: 25px;
+
+  border-radius: 18px;
+
+  padding: 28px 32px;
+
   box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.06);
+    0 5px 22px rgba(0, 0, 0, 0.06);
 }
 
 .sectionTitle {
-  font-size: 13px;
-  font-weight: 800;
+  margin-bottom: 22px;
+
+  font-size: 14px;
+  font-weight: 900;
+
   letter-spacing: 2px;
-  margin-bottom: 20px;
-  color: #4b5563;
+
+  color: #475569;
 }
 
 .participantGrid {
   display: grid;
+
   grid-template-columns:
-    2fr 1fr 1fr;
+    minmax(250px, 2fr)
+    minmax(160px, 1fr)
+    minmax(180px, 1fr);
+
   gap: 18px;
 }
 
 .fieldGroup {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+
+  gap: 8px;
 }
 
 .fieldGroup label {
   font-size: 12px;
-  font-weight: 700;
-  color: #4b5563;
+  font-weight: 800;
+
+  color: #475569;
 }
 
 .fieldGroup input,
 .fieldGroup select {
   width: 100%;
-  height: 45px;
-  padding: 0 13px;
+  height: 46px;
+
+  padding: 0 14px;
+
   border: 1px solid #d1d5db;
   border-radius: 9px;
+
   background: white;
+
   outline: none;
+
+  font-size: 14px;
 }
 
 .fieldGroup input:focus,
@@ -157,28 +199,74 @@ select {
 }
 
 
-/* =========================
+/* ========================================
+   START BUTTON
+======================================== */
+
+.startTestButton {
+  width: 100%;
+
+  margin-top: 25px;
+
+  height: 50px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #111827;
+  color: white;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.startTestButton:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+
+/* ========================================
    TEST CARD
-========================= */
+======================================== */
 
 .testCard {
-  margin-top: 20px;
+  margin-top: 22px;
+
   background: white;
+
   border-radius: 18px;
-  padding: 30px;
+
+  padding: 30px 34px;
+
   box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.06);
+    0 5px 22px rgba(0, 0, 0, 0.06);
 }
+
+
+/* ========================================
+   PROGRESS
+======================================== */
 
 .progressHeader {
   display: flex;
-  justify-content: space-between;
+
   align-items: center;
+  justify-content: space-between;
+
   margin-bottom: 10px;
 }
 
 .progressHeader strong {
-  font-size: 18px;
+  font-size: 17px;
 }
 
 .progressHeader span {
@@ -187,43 +275,58 @@ select {
 
 .progressPercent {
   font-size: 13px;
-  font-weight: 800;
+  font-weight: 900;
 }
 
 .progressBar {
+  width: 100%;
   height: 7px;
+
   background: #e5e7eb;
+
   border-radius: 20px;
+
   overflow: hidden;
 }
 
 .progressFill {
   height: 100%;
+
   background: #111827;
-  transition: width 0.3s ease;
+
+  transition:
+    width 0.3s ease;
 }
 
 
-/* =========================
+/* ========================================
    QUESTION
-========================= */
+======================================== */
 
 .postQuestionCard {
-  padding: 40px 15px 30px;
-  max-width: 800px;
-  margin: auto;
+  width: min(780px, 100%);
+
+  margin: 0 auto;
+
+  padding: 45px 20px 30px;
 }
 
 .questionTop {
   display: flex;
+
   align-items: center;
+
   gap: 15px;
 }
 
 .questionNumber {
   width: 58px;
   height: 58px;
+
+  flex-shrink: 0;
+
   border-radius: 14px;
+
   background: #111827;
   color: white;
 
@@ -237,36 +340,53 @@ select {
 
 .questionLabel {
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 900;
+
   letter-spacing: 2px;
-  color: #6b7280;
+
+  color: #64748b;
 }
 
 .questionText {
   margin-top: 30px;
-  font-size: 24px;
-  line-height: 1.5;
+
+  font-size: 22px;
+
+  line-height: 1.55;
+
   font-weight: 700;
+
+  color: #172033;
 }
 
 .answerLabel {
-  margin-top: 35px;
-  margin-bottom: 8px;
-  font-size: 12px;
-  font-weight: 800;
-  color: #6b7280;
+  margin-top: 32px;
+  margin-bottom: 9px;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  color: #64748b;
+
   text-transform: uppercase;
-  letter-spacing: 1px;
+
+  letter-spacing: 1.5px;
 }
 
 .postAnswerInput {
   width: 100%;
-  height: 58px;
-  padding: 0 18px;
+  height: 56px;
+
+  padding: 0 17px;
+
   border: 2px solid #d1d5db;
   border-radius: 11px;
-  font-size: 17px;
+
+  font-size: 16px;
+
   outline: none;
+
+  background: white;
 }
 
 .postAnswerInput:focus {
@@ -284,7 +404,8 @@ select {
 }
 
 .postAnswerStatus {
-  margin-top: 10px;
+  margin-top: 9px;
+
   font-size: 13px;
   font-weight: 800;
 }
@@ -298,30 +419,41 @@ select {
 }
 
 
-/* =========================
-   BUTTONS
-========================= */
+/* ========================================
+   NAVIGATION
+======================================== */
 
 .navigationButtons,
 .submittedActions {
+  width: min(780px, 100%);
+
+  margin: 15px auto 0;
+
   display: flex;
+
   justify-content: space-between;
+
   gap: 12px;
-  margin-top: 15px;
 }
 
 .navigationButtons button,
 .submittedActions button {
-  min-height: 48px;
+  min-height: 46px;
+
   padding: 0 22px;
+
   border: none;
-  border-radius: 10px;
+
+  border-radius: 9px;
+
+  font-size: 13px;
   font-weight: 800;
+
   cursor: pointer;
 }
 
 .btnPrevious {
-  background: #f3f4f6;
+  background: #f1f5f9;
   color: #374151;
 }
 
@@ -333,12 +465,14 @@ select {
 .btnNext {
   background: #111827;
   color: white;
+
   margin-left: auto;
 }
 
 .btnSubmit {
   background: #166534;
   color: white;
+
   margin-left: auto;
 }
 
@@ -348,46 +482,62 @@ select {
 }
 
 
-/* =========================
-   NUMBER NAVIGATOR
-========================= */
+/* ========================================
+   QUESTION NAVIGATOR
+======================================== */
 
 .questionNavigator {
-  margin-top: 20px;
+  margin-top: 22px;
+
   background: white;
+
   border-radius: 16px;
+
   padding: 20px 25px;
+
   box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.05);
+    0 5px 20px rgba(0, 0, 0, 0.05);
 }
 
 .navigatorTitle {
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  color: #6b7280;
   margin-bottom: 13px;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+  color: #64748b;
 }
 
 .numberGrid {
   display: grid;
+
   grid-template-columns:
     repeat(14, 1fr);
+
   gap: 8px;
 }
 
 .numberButton {
-  height: 40px;
+  height: 38px;
+
   border: 1px solid #d1d5db;
+
   background: white;
+
   border-radius: 8px;
+
   cursor: pointer;
+
+  font-size: 12px;
   font-weight: 800;
 }
 
 .numberActive {
   background: #111827;
   color: white;
+
   border-color: #111827;
 }
 
@@ -398,148 +548,253 @@ select {
 .numberCorrect {
   background: #dcfce7;
   color: #166534;
+
   border-color: #86efac;
 }
 
 .numberWrong {
   background: #fee2e2;
   color: #991b1b;
+
   border-color: #fca5a5;
 }
 
 
-/* =========================
+/* ========================================
    RESULT
-========================= */
+======================================== */
 
 .resultCard {
-  margin-top: 25px;
+  margin-top: 28px;
+
   background: #111827;
+
   color: white;
+
   border-radius: 18px;
+
   padding: 30px;
+
   text-align: center;
 }
 
 .resultTitle {
   font-size: 12px;
+
   letter-spacing: 3px;
-  font-weight: 800;
+
+  font-weight: 900;
+
   color: #9ca3af;
 }
 
 .resultScore {
   margin-top: 8px;
-  font-size: 64px;
+
+  font-size: 62px;
+
   font-weight: 900;
 }
 
 .resultLabel {
   font-size: 11px;
+
   letter-spacing: 2px;
+
   color: #9ca3af;
 }
 
 .resultStats {
   margin-top: 25px;
+
   display: flex;
+
   justify-content: center;
-  gap: 50px;
+
+  gap: 60px;
 }
 
 .resultStats div {
   display: flex;
+
   flex-direction: column;
+
   gap: 4px;
 }
 
 .resultStats strong {
-  font-size: 25px;
+  font-size: 24px;
 }
 
 .resultStats span {
   font-size: 11px;
+
   color: #9ca3af;
 }
 
 .resultMessage {
-  margin-top: 25px;
+  margin-top: 24px;
+
   font-size: 13px;
 }
 
 
-/* =========================
-   STATUS
-========================= */
+/* ========================================
+   SAVE STATUS
+======================================== */
 
 .saveStatus {
-  width: min(1050px, calc(100% - 30px));
-  margin: 15px auto;
+  margin-top: 15px;
+
   text-align: center;
+
   font-size: 13px;
+
   font-weight: 700;
+
   color: #555;
 }
 
 
-/* =========================
+/* ========================================
    FOOTER
-========================= */
+======================================== */
 
 .postFooter {
-  width: min(1050px, calc(100% - 30px));
-  margin: 35px auto 0;
+  margin-top: 35px;
+
   padding-top: 20px;
+
   border-top: 1px solid #d1d5db;
 
   display: flex;
+
   justify-content: space-between;
 
   font-size: 11px;
+
   color: #6b7280;
 }
 
 
-/* =========================
+/* ========================================
+   TABLET
+======================================== */
+
+@media (max-width: 900px) {
+
+  .postHeader {
+    padding: 35px 25px;
+  }
+
+  .brandBox {
+    min-width: 190px;
+    padding-right: 30px;
+  }
+
+  .headerTitle {
+    padding-left: 30px;
+  }
+
+  .participantGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .fieldName {
+    grid-column: 1 / -1;
+  }
+}
+
+
+/* ========================================
    MOBILE
-========================= */
+======================================== */
 
 @media (max-width: 700px) {
 
   .postHeader {
     min-height: auto;
-    padding: 25px 20px;
+
+    padding: 35px 20px;
+
     flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
+
+    align-items: center;
+
+    gap: 25px;
+
+    text-align: center;
   }
 
   .brandBox {
-    border-right: none;
-    border-bottom: 1px solid #4b5563;
-    padding-right: 0;
-    padding-bottom: 15px;
     width: 100%;
+
+    min-width: 0;
+
+    border-right: none;
+
+    border-bottom: 1px solid #4b5563;
+
+    padding-right: 0;
+
+    padding-bottom: 20px;
+
+    text-align: center;
   }
 
   .brandMain {
-    font-size: 27px;
+    font-size: 30px;
+
+    text-align: center;
+  }
+
+  .brandSub {
+    text-align: center;
+  }
+
+  .headerTitle {
+    width: 100%;
+
+    padding-left: 0;
+
+    text-align: center;
+  }
+
+  .smallTitle {
+    text-align: center;
   }
 
   .headerTitle h1 {
-    font-size: 34px;
+    font-size: 35px;
+
+    text-align: center;
+  }
+
+  .headerTitle p {
+    text-align: center;
+  }
+
+
+  .participantCard,
+  .testCard,
+  .questionNavigator,
+  .resultCard {
+    width: calc(100% - 30px);
+
+    padding: 20px;
   }
 
   .participantGrid {
     grid-template-columns: 1fr;
   }
 
-  .participantCard,
-  .testCard {
-    padding: 20px;
+  .fieldName {
+    grid-column: auto;
   }
 
   .postQuestionCard {
+    width: 100%;
+
     padding: 30px 0;
   }
 
@@ -568,11 +823,15 @@ select {
   .navigationButtons button,
   .submittedActions button {
     width: 100%;
+
     margin-left: 0;
   }
 
   .postFooter {
+    width: calc(100% - 30px);
+
     flex-direction: column;
+
     gap: 8px;
   }
 }
