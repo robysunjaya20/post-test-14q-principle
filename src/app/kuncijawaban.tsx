@@ -1,0 +1,16 @@
+export const KUNCI_JAWABAN = [
+  ["Stop Sign", "Tanda stop", "Tanda berhenti"],
+  ["Andon Cord", "EWS", "Early Warning System"],
+  ["Instructions", "Perintah"],
+  ["Process Parameters", "Parameter proses"],
+  ["Measurement Equipment"],
+  ["Check the Checker"],
+  ["TPM", "Total Productive Maintenance"],
+  ["Tools", "Alat"],
+  ["Restart"],
+  ["Labeling"],
+  ["Rework"],
+  ["Scrap"],
+  ["Dropped Parts"],
+  ["Correct Product"],
+];

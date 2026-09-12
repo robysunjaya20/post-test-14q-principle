@@ -1,26 +1,578 @@
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+* {
+  box-sizing: border-box;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+  background: #f3f5f8;
+  color: #20252b;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.postPage {
+  min-height: 100vh;
+  padding-bottom: 50px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.postHeader {
+  background: #111827;
+  color: white;
+  min-height: 190px;
+  padding: 35px max(20px, calc((100% - 1050px) / 2));
+
+  display: flex;
+  align-items: center;
+  gap: 45px;
+}
+
+.brandBox {
+  min-width: 190px;
+  border-right: 1px solid #4b5563;
+  padding-right: 35px;
+}
+
+.brandMain {
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.brandSub {
+  margin-top: 5px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #d1d5db;
+}
+
+.headerTitle {
+  flex: 1;
+}
+
+.smallTitle {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #9ca3af;
+}
+
+.headerTitle h1 {
+  margin: 7px 0;
+  font-size: 42px;
+  line-height: 1;
+  letter-spacing: 2px;
+}
+
+.headerTitle p {
+  margin: 0;
+  color: #cbd5e1;
+}
+
+
+/* =========================
+   MAIN CARD
+========================= */
+
+.participantCard,
+.testCard,
+.questionNavigator,
+.resultCard {
+  width: min(1050px, calc(100% - 30px));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.participantCard {
+  margin-top: 25px;
+  background: white;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.sectionTitle {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  color: #4b5563;
+}
+
+.participantGrid {
+  display: grid;
+  grid-template-columns:
+    2fr 1fr 1fr;
+  gap: 18px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.fieldGroup label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #4b5563;
+}
+
+.fieldGroup input,
+.fieldGroup select {
+  width: 100%;
+  height: 45px;
+  padding: 0 13px;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  background: white;
+  outline: none;
+}
+
+.fieldGroup input:focus,
+.fieldGroup select:focus {
+  border-color: #111827;
+}
+
+
+/* =========================
+   TEST CARD
+========================= */
+
+.testCard {
+  margin-top: 20px;
+  background: white;
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.progressHeader strong {
+  font-size: 18px;
+}
+
+.progressHeader span {
+  color: #6b7280;
+}
+
+.progressPercent {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.progressBar {
+  height: 7px;
+  background: #e5e7eb;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: #111827;
+  transition: width 0.3s ease;
+}
+
+
+/* =========================
+   QUESTION
+========================= */
+
+.postQuestionCard {
+  padding: 40px 15px 30px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.questionTop {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.questionNumber {
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
+  background: #111827;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.questionLabel {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #6b7280;
+}
+
+.questionText {
+  margin-top: 30px;
+  font-size: 24px;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+.answerLabel {
+  margin-top: 35px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.postAnswerInput {
+  width: 100%;
+  height: 58px;
+  padding: 0 18px;
+  border: 2px solid #d1d5db;
+  border-radius: 11px;
+  font-size: 17px;
+  outline: none;
+}
+
+.postAnswerInput:focus {
+  border-color: #111827;
+}
+
+.postAnswerInput.answerCorrect {
+  background: #ecfdf5;
+  border-color: #22c55e;
+}
+
+.postAnswerInput.answerWrong {
+  background: #fef2f2;
+  border-color: #ef4444;
+}
+
+.postAnswerStatus {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.correctStatus {
+  color: #15803d;
+}
+
+.wrongStatus {
+  color: #dc2626;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.navigationButtons,
+.submittedActions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.navigationButtons button,
+.submittedActions button {
+  min-height: 48px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.btnPrevious {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.btnPrevious:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btnNext {
+  background: #111827;
+  color: white;
+  margin-left: auto;
+}
+
+.btnSubmit {
+  background: #166534;
+  color: white;
+  margin-left: auto;
+}
+
+.btnNewTest {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+
+/* =========================
+   NUMBER NAVIGATOR
+========================= */
+
+.questionNavigator {
+  margin-top: 20px;
+  background: white;
+  border-radius: 16px;
+  padding: 20px 25px;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.navigatorTitle {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #6b7280;
+  margin-bottom: 13px;
+}
+
+.numberGrid {
+  display: grid;
+  grid-template-columns:
+    repeat(14, 1fr);
+  gap: 8px;
+}
+
+.numberButton {
+  height: 40px;
+  border: 1px solid #d1d5db;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.numberActive {
+  background: #111827;
+  color: white;
+  border-color: #111827;
+}
+
+.numberAnswered {
+  background: #e5e7eb;
+}
+
+.numberCorrect {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #86efac;
+}
+
+.numberWrong {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fca5a5;
+}
+
+
+/* =========================
+   RESULT
+========================= */
+
+.resultCard {
+  margin-top: 25px;
+  background: #111827;
+  color: white;
+  border-radius: 18px;
+  padding: 30px;
+  text-align: center;
+}
+
+.resultTitle {
+  font-size: 12px;
+  letter-spacing: 3px;
+  font-weight: 800;
+  color: #9ca3af;
+}
+
+.resultScore {
+  margin-top: 8px;
+  font-size: 64px;
+  font-weight: 900;
+}
+
+.resultLabel {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #9ca3af;
+}
+
+.resultStats {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+
+.resultStats div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.resultStats strong {
+  font-size: 25px;
+}
+
+.resultStats span {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.resultMessage {
+  margin-top: 25px;
+  font-size: 13px;
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.saveStatus {
+  width: min(1050px, calc(100% - 30px));
+  margin: 15px auto;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #555;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.postFooter {
+  width: min(1050px, calc(100% - 30px));
+  margin: 35px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid #d1d5db;
+
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 11px;
+  color: #6b7280;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+  .postHeader {
+    min-height: auto;
+    padding: 25px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .brandBox {
+    border-right: none;
+    border-bottom: 1px solid #4b5563;
+    padding-right: 0;
+    padding-bottom: 15px;
+    width: 100%;
+  }
+
+  .brandMain {
+    font-size: 27px;
+  }
+
+  .headerTitle h1 {
+    font-size: 34px;
+  }
+
+  .participantGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .participantCard,
+  .testCard {
+    padding: 20px;
+  }
+
+  .postQuestionCard {
+    padding: 30px 0;
+  }
+
+  .questionText {
+    font-size: 20px;
+  }
+
+  .numberGrid {
+    grid-template-columns:
+      repeat(7, 1fr);
+  }
+
+  .resultScore {
+    font-size: 52px;
+  }
+
+  .resultStats {
+    gap: 25px;
+  }
+
+  .navigationButtons,
+  .submittedActions {
+    flex-direction: column;
+  }
+
+  .navigationButtons button,
+  .submittedActions button {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .postFooter {
+    flex-direction: column;
+    gap: 8px;
+  }
 }
