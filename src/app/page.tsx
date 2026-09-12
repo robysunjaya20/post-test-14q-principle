@@ -22,18 +22,18 @@ type ResultData = {
 };
 
 export default function Home() {
-  // =========================================
+  // ==================================================
   // DATA KARYAWAN
-  // =========================================
+  // ==================================================
 
   const [nama, setNama] = useState("");
   const [nik, setNik] = useState("");
   const [department, setDepartment] = useState("");
   const [tanggal, setTanggal] = useState("");
 
-  // =========================================
+  // ==================================================
   // STATUS TEST
-  // =========================================
+  // ==================================================
 
   const [testStarted, setTestStarted] =
     useState(false);
@@ -41,31 +41,31 @@ export default function Home() {
   const [submitted, setSubmitted] =
     useState(false);
 
-  // =========================================
-  // JAWABAN
-  // =========================================
+  // ==================================================
+  // JAWABAN 14 SOAL
+  // ==================================================
 
   const [answers, setAnswers] = useState<string[]>(
     Array(TOTAL_SOAL).fill("")
   );
 
-  // =========================================
+  // ==================================================
   // SOAL AKTIF
-  // =========================================
+  // ==================================================
 
   const [currentQuestion, setCurrentQuestion] =
     useState(1);
 
-  // =========================================
-  // HASIL
-  // =========================================
+  // ==================================================
+  // HASIL TEST
+  // ==================================================
 
   const [result, setResult] =
     useState<ResultData | null>(null);
 
-  // =========================================
+  // ==================================================
   // STATUS PENYIMPANAN
-  // =========================================
+  // ==================================================
 
   const [loading, setLoading] =
     useState(false);
@@ -73,31 +73,34 @@ export default function Home() {
   const [saveStatus, setSaveStatus] =
     useState("");
 
-  // =========================================
-  // SET TANGGAL HARI INI
-  // =========================================
+  // ==================================================
+  // TANGGAL OTOMATIS HARI INI
+  // ==================================================
 
   useEffect(() => {
     const now = new Date();
 
-    const yyyy = now.getFullYear();
+    const yyyy =
+      now.getFullYear();
 
-    const mm = String(
-      now.getMonth() + 1
-    ).padStart(2, "0");
+    const mm =
+      String(
+        now.getMonth() + 1
+      ).padStart(2, "0");
 
-    const dd = String(
-      now.getDate()
-    ).padStart(2, "0");
+    const dd =
+      String(
+        now.getDate()
+      ).padStart(2, "0");
 
     setTanggal(
       `${yyyy}-${mm}-${dd}`
     );
   }, []);
 
-  // =========================================
+  // ==================================================
   // NORMALIZE JAWABAN
-  // =========================================
+  // ==================================================
 
   function normalizeAnswer(
     value: string
@@ -108,9 +111,9 @@ export default function Home() {
       .replace(/\s+/g, " ");
   }
 
-  // =========================================
+  // ==================================================
   // CEK JAWABAN
-  // =========================================
+  // ==================================================
 
   function checkAnswer(
     answer: string,
@@ -137,9 +140,9 @@ export default function Home() {
     );
   }
 
-  // =========================================
+  // ==================================================
   // UPDATE JAWABAN
-  // =========================================
+  // ==================================================
 
   function updateAnswer(
     value: string
@@ -158,9 +161,9 @@ export default function Home() {
     });
   }
 
-  // =========================================
+  // ==================================================
   // MULAI POST TEST
-  // =========================================
+  // ==================================================
 
   function handleStartTest() {
     if (!nama.trim()) {
@@ -186,12 +189,15 @@ export default function Home() {
 
     if (!tanggal) {
       alert(
-        "Silakan pilih Tanggal."
+        "Silakan pilih Tanggal terlebih dahulu."
       );
       return;
     }
 
+    // Mulai test
     setTestStarted(true);
+
+    setSubmitted(false);
 
     setCurrentQuestion(1);
 
@@ -201,9 +207,9 @@ export default function Home() {
     });
   }
 
-  // =========================================
+  // ==================================================
   // SOAL BERIKUTNYA
-  // =========================================
+  // ==================================================
 
   function nextQuestion() {
     if (
@@ -221,9 +227,9 @@ export default function Home() {
     }
   }
 
-  // =========================================
+  // ==================================================
   // SOAL SEBELUMNYA
-  // =========================================
+  // ==================================================
 
   function previousQuestion() {
     if (
@@ -240,9 +246,9 @@ export default function Home() {
     }
   }
 
-  // =========================================
-  // PILIH NOMOR SOAL
-  // =========================================
+  // ==================================================
+  // PINDAH KE NOMOR SOAL
+  // ==================================================
 
   function goToQuestion(
     nomor: number
@@ -255,11 +261,15 @@ export default function Home() {
     });
   }
 
-  // =========================================
+  // ==================================================
   // SUBMIT POST TEST
-  // =========================================
+  // ==================================================
 
   function handleSubmit() {
+    // ----------------------------------------------
+    // VALIDASI DATA KARYAWAN
+    // ----------------------------------------------
+
     if (!nama.trim()) {
       alert(
         "Nama belum diisi."
@@ -288,7 +298,10 @@ export default function Home() {
       return;
     }
 
-    // Cek apakah masih ada soal kosong
+    // ----------------------------------------------
+    // CEK SOAL KOSONG
+    // ----------------------------------------------
+
     const soalKosong =
       answers.some(
         (answer) =>
@@ -318,9 +331,9 @@ export default function Home() {
       return;
     }
 
-    // =====================================
-    // HITUNG HASIL
-    // =====================================
+    // ----------------------------------------------
+    // HITUNG JAWABAN
+    // ----------------------------------------------
 
     const detail =
       answers.map(
@@ -346,9 +359,9 @@ export default function Home() {
           100
       );
 
-    // =====================================
+    // ----------------------------------------------
     // TAMPILKAN HASIL SEGERA
-    // =====================================
+    // ----------------------------------------------
 
     setResult({
       benar,
@@ -365,9 +378,9 @@ export default function Home() {
       behavior: "smooth",
     });
 
-    // =====================================
+    // ----------------------------------------------
     // SIMPAN KE GOOGLE SHEETS
-    // =====================================
+    // ----------------------------------------------
 
     setLoading(true);
 
@@ -390,17 +403,10 @@ export default function Home() {
           nik,
           department,
           tanggal,
-
-          q14Answers:
-            answers,
-
+          q14Answers: answers,
           benar,
-
           salah,
-
-          total:
-            TOTAL_SOAL,
-
+          total: TOTAL_SOAL,
           nilai,
         }),
       }
@@ -435,9 +441,9 @@ export default function Home() {
       });
   }
 
-  // =========================================
+  // ==================================================
   // TEST BARU
-  // =========================================
+  // ==================================================
 
   function handleReset() {
     setNama("");
@@ -446,7 +452,7 @@ export default function Home() {
 
     setDepartment("");
 
-    // Tanggal kembali ke hari ini
+    // Kembalikan tanggal ke hari ini
     const now = new Date();
 
     const yyyy =
@@ -466,14 +472,15 @@ export default function Home() {
       `${yyyy}-${mm}-${dd}`
     );
 
+    // Kosongkan jawaban
     setAnswers(
-      Array(
-        TOTAL_SOAL
-      ).fill("")
+      Array(TOTAL_SOAL).fill("")
     );
 
+    // Kembali ke soal pertama
     setCurrentQuestion(1);
 
+    // Kembali ke halaman awal
     setTestStarted(false);
 
     setSubmitted(false);
@@ -490,74 +497,89 @@ export default function Home() {
     });
   }
 
-  // =========================================
+  // ==================================================
   // PROGRESS
-  // =========================================
+  // ==================================================
 
   const progress =
     (currentQuestion /
       TOTAL_SOAL) *
     100;
 
-  // =========================================
+  // ==================================================
   // RENDER
-  // =========================================
+  // ==================================================
 
   return (
     <main className="postPage">
 
-      {/* =====================================
+      {/* ==================================================
           HEADER
-      ===================================== */}
+      ================================================== */}
 
       <header className="postHeader">
 
-        <div className="brandBox">
+        <div className="postHeaderInner">
 
-          <div className="brandMain">
-            BUMJIN
+          {/* ============================================
+              BUMJIN
+          ============================================ */}
+
+          <div className="brandBox">
+
+            <div className="brandMain">
+              BUMJIN
+            </div>
+
+            <div className="brandSub">
+              QUALITY TRAINING
+            </div>
+
           </div>
 
-          <div className="brandSub">
-            QUALITY TRAINING
+
+          {/* ============================================
+              JUDUL
+          ============================================ */}
+
+          <div className="headerTitle">
+
+            <div className="smallTitle">
+              14Q BASICS PRINCIPLE
+            </div>
+
+            <h1>
+              POST TEST
+            </h1>
+
+            <p>
+              Evaluasi pemahaman peserta
+            </p>
+
           </div>
-
-        </div>
-
-
-        <div className="headerTitle">
-
-          <div className="smallTitle">
-            14Q BASICS PRINCIPLE
-          </div>
-
-          <h1>
-            POST TEST
-          </h1>
-
-          <p>
-            Evaluasi pemahaman peserta
-          </p>
 
         </div>
 
       </header>
 
 
-      {/* =====================================
+      {/* ==================================================
           HASIL TEST
-      ===================================== */}
+      ================================================== */}
 
       {result && (
+
         <section className="resultCard">
 
           <div className="resultTitle">
             HASIL POST TEST
           </div>
 
+
           <div className="resultScore">
             {result.nilai}
           </div>
+
 
           <div className="resultLabel">
             NILAI
@@ -566,7 +588,10 @@ export default function Home() {
 
           <div className="resultStats">
 
+            {/* BENAR */}
+
             <div>
+
               <strong>
                 {result.benar}
               </strong>
@@ -574,10 +599,14 @@ export default function Home() {
               <span>
                 Benar
               </span>
+
             </div>
 
 
+            {/* SALAH */}
+
             <div>
+
               <strong>
                 {result.salah}
               </strong>
@@ -585,10 +614,14 @@ export default function Home() {
               <span>
                 Salah
               </span>
+
             </div>
 
 
+            {/* TOTAL */}
+
             <div>
+
               <strong>
                 {result.total}
               </strong>
@@ -596,6 +629,7 @@ export default function Home() {
               <span>
                 Total Soal
               </span>
+
             </div>
 
           </div>
@@ -610,12 +644,13 @@ export default function Home() {
           </div>
 
         </section>
+
       )}
 
 
-      {/* =====================================
+      {/* ==================================================
           DATA KARYAWAN
-      ===================================== */}
+      ================================================== */}
 
       <section className="participantCard">
 
@@ -626,9 +661,11 @@ export default function Home() {
 
         <div className="participantGrid">
 
-          {/* NAMA */}
+          {/* ============================================
+              NAMA
+          ============================================ */}
 
-          <div className="fieldGroup fieldName">
+          <div className="fieldGroup">
 
             <label>
               Nama
@@ -652,7 +689,9 @@ export default function Home() {
           </div>
 
 
-          {/* NIK */}
+          {/* ============================================
+              NIK
+          ============================================ */}
 
           <div className="fieldGroup">
 
@@ -678,7 +717,9 @@ export default function Home() {
           </div>
 
 
-          {/* DEPARTMENT */}
+          {/* ============================================
+              DEPARTMENT
+          ============================================ */}
 
           <div className="fieldGroup">
 
@@ -704,12 +745,14 @@ export default function Home() {
 
               {DEPARTMENTS.map(
                 (item) => (
+
                   <option
                     key={item}
                     value={item}
                   >
                     {item}
                   </option>
+
                 )
               )}
 
@@ -718,7 +761,9 @@ export default function Home() {
           </div>
 
 
-          {/* TANGGAL */}
+          {/* ============================================
+              TANGGAL
+          ============================================ */}
 
           <div className="fieldGroup">
 
@@ -744,9 +789,9 @@ export default function Home() {
         </div>
 
 
-        {/* =================================
-            MULAI POST TEST
-        ================================= */}
+        {/* ==================================================
+            TOMBOL MULAI
+        ================================================== */}
 
         {!testStarted && (
 
@@ -765,15 +810,17 @@ export default function Home() {
       </section>
 
 
-      {/* =====================================
+      {/* ==================================================
           TEST
-      ===================================== */}
+      ================================================== */}
 
       {testStarted && (
 
         <section className="testCard">
 
-          {/* PROGRESS */}
+          {/* ============================================
+              PROGRESS
+          ============================================ */}
 
           {!submitted && (
 
@@ -824,7 +871,9 @@ export default function Home() {
           )}
 
 
-          {/* SOAL */}
+          {/* ============================================
+              SOAL
+          ============================================ */}
 
           <SoalPostTest
             nomor={
@@ -856,13 +905,15 @@ export default function Home() {
           />
 
 
-          {/* =================================
-              NAVIGASI SEBELUM SUBMIT
-          ================================= */}
+          {/* ============================================
+              NAVIGASI
+          ============================================ */}
 
           {!submitted && (
 
             <div className="navigationButtons">
+
+              {/* SEBELUMNYA */}
 
               <button
                 type="button"
@@ -878,6 +929,8 @@ export default function Home() {
                 ← Sebelumnya
               </button>
 
+
+              {/* BERIKUTNYA / SUBMIT */}
 
               {currentQuestion <
               TOTAL_SOAL ? (
@@ -911,9 +964,9 @@ export default function Home() {
           )}
 
 
-          {/* =================================
+          {/* ============================================
               SETELAH SUBMIT
-          ================================= */}
+          ============================================ */}
 
           {submitted && (
 
@@ -954,9 +1007,9 @@ export default function Home() {
       )}
 
 
-      {/* =====================================
+      {/* ==================================================
           DAFTAR NOMOR SOAL
-      ===================================== */}
+      ================================================== */}
 
       {testStarted && (
 
@@ -979,7 +1032,10 @@ export default function Home() {
                   "numberButton";
 
 
-                // Setelah submit
+                // ========================================
+                // SETELAH SUBMIT
+                // ========================================
+
                 if (
                   submitted &&
                   result
@@ -994,7 +1050,11 @@ export default function Home() {
 
                 }
 
-                // Soal aktif
+
+                // ========================================
+                // SOAL AKTIF
+                // ========================================
+
                 else if (
                   nomor ===
                   currentQuestion
@@ -1005,7 +1065,11 @@ export default function Home() {
 
                 }
 
-                // Sudah dijawab
+
+                // ========================================
+                // SUDAH DIJAWAB
+                // ========================================
+
                 else if (
                   answers[
                     index
@@ -1047,9 +1111,9 @@ export default function Home() {
       )}
 
 
-      {/* =====================================
+      {/* ==================================================
           STATUS PENYIMPANAN
-      ===================================== */}
+      ================================================== */}
 
       {saveStatus && (
 
@@ -1067,11 +1131,6 @@ export default function Home() {
         </div>
 
       )}
-
-
-      {/* =====================================
-          FOOTER
-      ===================================== */}
 
       <footer className="postFooter">
 

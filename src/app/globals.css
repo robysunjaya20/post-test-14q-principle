@@ -1,3 +1,7 @@
+/* =========================================================
+   RESET
+========================================================= */
+
 * {
   box-sizing: border-box;
 }
@@ -6,94 +10,148 @@ html {
   scroll-behavior: smooth;
 }
 
+html,
 body {
   margin: 0;
+  padding: 0;
+}
+
+body {
   font-family:
     Arial,
     Helvetica,
     sans-serif;
+
   background: #f3f5f8;
+
   color: #20252b;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 button,
 input,
 select {
-  font: inherit;
+  font-family: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+input,
+select {
+  outline: none;
 }
 
 
-/* ========================================
+/* =========================================================
    PAGE
-======================================== */
+========================================================= */
 
 .postPage {
+  width: 100%;
   min-height: 100vh;
+
   padding-bottom: 50px;
 }
 
 
-/* ========================================
+/* =========================================================
    HEADER
-======================================== */
+========================================================= */
 
 .postHeader {
   width: 100%;
-  min-height: 210px;
 
   background: #111827;
-  color: white;
 
-  padding: 38px 30px;
+  color: white;
+}
+
+.postHeaderInner {
+  width: min(1100px, calc(100% - 40px));
+
+  min-height: 220px;
+
+  margin: 0 auto;
+
+  padding: 35px 0;
 
   display: flex;
+
   align-items: center;
 }
 
-.postHeader > * {
-  width: 100%;
-}
+
+/* =========================================================
+   BRAND
+========================================================= */
 
 .brandBox {
-  min-width: 225px;
-  width: auto;
-
-  border-right: 1px solid #4b5563;
+  width: 245px;
+  min-width: 245px;
 
   padding-right: 45px;
+
+  border-right: 1px solid #4b5563;
 }
 
 .brandMain {
   font-size: 38px;
+
   font-weight: 900;
+
+  line-height: 1;
+
   letter-spacing: 2px;
 }
 
 .brandSub {
-  margin-top: 7px;
+  margin-top: 10px;
 
   font-size: 12px;
+
+  font-weight: 500;
+
+  line-height: 1.2;
+
   letter-spacing: 3px;
 
   color: #d1d5db;
 }
 
+
+/* =========================================================
+   HEADER TITLE
+========================================================= */
+
 .headerTitle {
-  flex: 1;
   padding-left: 50px;
+
+  min-width: 0;
 }
 
 .smallTitle {
   font-size: 13px;
+
   font-weight: 800;
+
+  line-height: 1.2;
+
   letter-spacing: 3px;
+
   color: #9ca3af;
 }
 
 .headerTitle h1 {
-  margin: 6px 0;
+  margin: 7px 0 8px;
 
   font-size: 46px;
+
+  font-weight: 800;
+
   line-height: 1;
 
   letter-spacing: 2px;
@@ -103,75 +161,83 @@ select {
   margin: 0;
 
   font-size: 15px;
+
+  line-height: 1.4;
+
   color: #cbd5e1;
 }
 
 
-/* ========================================
-   CONTENT WIDTH
-======================================== */
-
-.participantCard,
-.testCard,
-.questionNavigator,
-.resultCard,
-.saveStatus,
-.postFooter {
-  width: min(1100px, calc(100% - 40px));
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-/* ========================================
+/* =========================================================
    DATA KARYAWAN
-======================================== */
+========================================================= */
 
 .participantCard {
-  margin-top: 28px;
+  width: min(1100px, calc(100% - 40px));
+
+  margin: 32px auto 0;
+
+  padding: 34px 38px;
 
   background: white;
 
-  border-radius: 18px;
-
-  padding: 28px 32px;
+  border-radius: 20px;
 
   box-shadow:
-    0 5px 22px rgba(0, 0, 0, 0.06);
+    0 7px 28px rgba(0, 0, 0, 0.07);
 }
 
 .sectionTitle {
-  margin-bottom: 22px;
+  margin-bottom: 26px;
 
-  font-size: 14px;
+  font-size: 15px;
+
   font-weight: 900;
 
-  letter-spacing: 2px;
+  line-height: 1.2;
+
+  letter-spacing: 2.5px;
 
   color: #475569;
 }
 
+
+/* =========================================================
+   DATA KARYAWAN GRID
+========================================================= */
+
 .participantGrid {
+  width: 100%;
+
   display: grid;
 
   grid-template-columns:
-    minmax(250px, 2fr)
-    minmax(160px, 1fr)
-    minmax(180px, 1fr);
+    2fr
+    1.1fr
+    1.1fr
+    1.1fr;
 
-  gap: 18px;
+  gap: 20px;
+
+  align-items: end;
 }
 
 .fieldGroup {
+  min-width: 0;
+
   display: flex;
+
   flex-direction: column;
 
-  gap: 8px;
+  gap: 9px;
 }
 
 .fieldGroup label {
-  font-size: 12px;
+  font-size: 13px;
+
   font-weight: 800;
+
+  line-height: 1.2;
 
   color: #475569;
 }
@@ -179,45 +245,75 @@ select {
 .fieldGroup input,
 .fieldGroup select {
   width: 100%;
-  height: 46px;
 
-  padding: 0 14px;
+  height: 52px;
+
+  padding: 0 16px;
 
   border: 1px solid #d1d5db;
-  border-radius: 9px;
+
+  border-radius: 10px;
 
   background: white;
 
-  outline: none;
+  color: #20252b;
 
-  font-size: 14px;
+  font-size: 15px;
+
+  line-height: 1;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.fieldGroup input::placeholder {
+  color: #94a3b8;
 }
 
 .fieldGroup input:focus,
 .fieldGroup select:focus {
   border-color: #111827;
+
+  box-shadow:
+    0 0 0 3px rgba(17, 24, 39, 0.07);
+}
+
+.fieldGroup input:disabled,
+.fieldGroup select:disabled {
+  background: #f8fafc;
+
+  color: #64748b;
+
+  cursor: not-allowed;
 }
 
 
-/* ========================================
-   START BUTTON
-======================================== */
+/* =========================================================
+   START TEST BUTTON
+========================================================= */
 
 .startTestButton {
   width: 100%;
 
+  height: 52px;
+
   margin-top: 25px;
 
-  height: 50px;
+  padding: 0 20px;
 
   border: none;
+
   border-radius: 10px;
 
   background: #111827;
+
   color: white;
 
   font-size: 13px;
-  font-weight: 800;
+
+  font-weight: 900;
 
   letter-spacing: 1px;
 
@@ -225,68 +321,109 @@ select {
 
   transition:
     transform 0.2s ease,
-    opacity 0.2s ease;
+    opacity 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .startTestButton:hover {
-  opacity: 0.9;
+  opacity: 0.94;
+
   transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 15px rgba(17, 24, 39, 0.15);
+}
+
+.startTestButton:active {
+  transform: translateY(0);
 }
 
 
-/* ========================================
+/* =========================================================
    TEST CARD
-======================================== */
+========================================================= */
 
 .testCard {
-  margin-top: 22px;
+  width: min(1100px, calc(100% - 40px));
 
-  background: white;
-
-  border-radius: 18px;
+  margin: 22px auto 0;
 
   padding: 30px 34px;
 
+  background: white;
+
+  border-radius: 20px;
+
   box-shadow:
-    0 5px 22px rgba(0, 0, 0, 0.06);
+    0 7px 28px rgba(0, 0, 0, 0.07);
 }
 
 
-/* ========================================
-   PROGRESS
-======================================== */
+/* =========================================================
+   PROGRESS HEADER
+========================================================= */
 
 .progressHeader {
+  width: 100%;
+
   display: flex;
 
   align-items: center;
+
   justify-content: space-between;
+
+  gap: 20px;
 
   margin-bottom: 10px;
 }
 
+.progressHeader > div:first-child {
+  display: flex;
+
+  align-items: baseline;
+
+  gap: 4px;
+}
+
 .progressHeader strong {
   font-size: 17px;
+
+  font-weight: 800;
+
+  color: #111827;
 }
 
 .progressHeader span {
-  color: #6b7280;
+  font-size: 15px;
+
+  color: #64748b;
 }
 
 .progressPercent {
+  flex-shrink: 0;
+
   font-size: 13px;
+
   font-weight: 900;
+
+  color: #111827;
 }
+
+
+/* =========================================================
+   PROGRESS BAR
+========================================================= */
 
 .progressBar {
   width: 100%;
+
   height: 7px;
+
+  overflow: hidden;
 
   background: #e5e7eb;
 
   border-radius: 20px;
-
-  overflow: hidden;
 }
 
 .progressFill {
@@ -294,14 +431,16 @@ select {
 
   background: #111827;
 
+  border-radius: 20px;
+
   transition:
     width 0.3s ease;
 }
 
 
-/* ========================================
-   QUESTION
-======================================== */
+/* =========================================================
+   QUESTION CARD
+========================================================= */
 
 .postQuestionCard {
   width: min(780px, 100%);
@@ -325,81 +464,133 @@ select {
 
   flex-shrink: 0;
 
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
   border-radius: 14px;
 
   background: #111827;
+
   color: white;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   font-size: 24px;
+
   font-weight: 900;
+
+  line-height: 1;
 }
 
 .questionLabel {
   font-size: 12px;
+
   font-weight: 900;
+
+  line-height: 1;
 
   letter-spacing: 2px;
 
   color: #64748b;
 }
 
+
+/* =========================================================
+   QUESTION TEXT
+========================================================= */
+
 .questionText {
   margin-top: 30px;
 
   font-size: 22px;
 
-  line-height: 1.55;
-
   font-weight: 700;
+
+  line-height: 1.55;
 
   color: #172033;
 }
 
+
+/* =========================================================
+   ANSWER
+========================================================= */
+
 .answerLabel {
   margin-top: 32px;
+
   margin-bottom: 9px;
 
   font-size: 11px;
+
   font-weight: 900;
 
-  color: #64748b;
+  line-height: 1.2;
+
+  letter-spacing: 1.5px;
 
   text-transform: uppercase;
 
-  letter-spacing: 1.5px;
+  color: #64748b;
 }
 
 .postAnswerInput {
   width: 100%;
+
   height: 56px;
 
   padding: 0 17px;
 
   border: 2px solid #d1d5db;
+
   border-radius: 11px;
+
+  background: white;
+
+  color: #111827;
 
   font-size: 16px;
 
+  line-height: 1;
+
   outline: none;
 
-  background: white;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.postAnswerInput::placeholder {
+  color: #94a3b8;
 }
 
 .postAnswerInput:focus {
   border-color: #111827;
+
+  box-shadow:
+    0 0 0 3px rgba(17, 24, 39, 0.06);
 }
+
+.postAnswerInput:disabled {
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   CORRECT / WRONG ANSWER
+========================================================= */
 
 .postAnswerInput.answerCorrect {
   background: #ecfdf5;
+
   border-color: #22c55e;
 }
 
 .postAnswerInput.answerWrong {
   background: #fef2f2;
+
   border-color: #ef4444;
 }
 
@@ -407,7 +598,10 @@ select {
   margin-top: 9px;
 
   font-size: 13px;
+
   font-weight: 800;
+
+  line-height: 1.3;
 }
 
 .correctStatus {
@@ -419,9 +613,9 @@ select {
 }
 
 
-/* ========================================
-   NAVIGATION
-======================================== */
+/* =========================================================
+   NAVIGATION BUTTONS
+========================================================= */
 
 .navigationButtons,
 .submittedActions {
@@ -430,6 +624,8 @@ select {
   margin: 15px auto 0;
 
   display: flex;
+
+  align-items: center;
 
   justify-content: space-between;
 
@@ -447,63 +643,123 @@ select {
   border-radius: 9px;
 
   font-size: 13px;
+
   font-weight: 800;
 
+  line-height: 1;
+
   cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
+
+.navigationButtons button:hover,
+.submittedActions button:hover {
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   PREVIOUS
+========================================================= */
 
 .btnPrevious {
   background: #f1f5f9;
+
   color: #374151;
+}
+
+.btnPrevious:hover {
+  background: #e2e8f0;
 }
 
 .btnPrevious:disabled {
   opacity: 0.4;
+
   cursor: not-allowed;
+
+  transform: none;
 }
+
+
+/* =========================================================
+   NEXT
+========================================================= */
 
 .btnNext {
-  background: #111827;
-  color: white;
-
   margin-left: auto;
+
+  background: #111827;
+
+  color: white;
 }
+
+.btnNext:hover {
+  opacity: 0.92;
+}
+
+
+/* =========================================================
+   SUBMIT
+========================================================= */
 
 .btnSubmit {
-  background: #166534;
-  color: white;
-
   margin-left: auto;
+
+  background: #166534;
+
+  color: white;
 }
+
+.btnSubmit:hover {
+  background: #14532d;
+}
+
+
+/* =========================================================
+   NEW TEST
+========================================================= */
 
 .btnNewTest {
   background: #e5e7eb;
+
   color: #111827;
 }
 
+.btnNewTest:hover {
+  background: #d1d5db;
+}
 
-/* ========================================
+
+/* =========================================================
    QUESTION NAVIGATOR
-======================================== */
+========================================================= */
 
 .questionNavigator {
-  margin-top: 22px;
+  width: min(1100px, calc(100% - 40px));
 
-  background: white;
-
-  border-radius: 16px;
+  margin: 22px auto 0;
 
   padding: 20px 25px;
 
+  background: white;
+
+  border-radius: 17px;
+
   box-shadow:
-    0 5px 20px rgba(0, 0, 0, 0.05);
+    0 6px 24px rgba(0, 0, 0, 0.05);
 }
 
 .navigatorTitle {
   margin-bottom: 13px;
 
   font-size: 12px;
+
   font-weight: 900;
+
+  line-height: 1.2;
 
   letter-spacing: 1px;
 
@@ -511,6 +767,8 @@ select {
 }
 
 .numberGrid {
+  width: 100%;
+
   display: grid;
 
   grid-template-columns:
@@ -520,84 +778,142 @@ select {
 }
 
 .numberButton {
+  width: 100%;
+
   height: 38px;
+
+  padding: 0;
 
   border: 1px solid #d1d5db;
 
+  border-radius: 8px;
+
   background: white;
 
-  border-radius: 8px;
+  color: #374151;
+
+  font-size: 12px;
+
+  font-weight: 800;
 
   cursor: pointer;
 
-  font-size: 12px;
-  font-weight: 800;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease;
 }
+
+.numberButton:hover {
+  transform: translateY(-1px);
+
+  border-color: #9ca3af;
+}
+
+
+/* =========================================================
+   ACTIVE QUESTION
+========================================================= */
 
 .numberActive {
   background: #111827;
-  color: white;
 
   border-color: #111827;
+
+  color: white;
 }
+
+
+/* =========================================================
+   ANSWERED QUESTION
+========================================================= */
 
 .numberAnswered {
   background: #e5e7eb;
+
+  border-color: #d1d5db;
+
+  color: #374151;
 }
+
+
+/* =========================================================
+   CORRECT NUMBER
+========================================================= */
 
 .numberCorrect {
   background: #dcfce7;
-  color: #166534;
 
   border-color: #86efac;
+
+  color: #166534;
 }
+
+
+/* =========================================================
+   WRONG NUMBER
+========================================================= */
 
 .numberWrong {
   background: #fee2e2;
-  color: #991b1b;
 
   border-color: #fca5a5;
+
+  color: #991b1b;
 }
 
 
-/* ========================================
-   RESULT
-======================================== */
+/* =========================================================
+   RESULT CARD
+========================================================= */
 
 .resultCard {
-  margin-top: 28px;
+  width: min(1100px, calc(100% - 40px));
+
+  margin: 28px auto 0;
+
+  padding: 32px;
 
   background: #111827;
 
   color: white;
 
-  border-radius: 18px;
-
-  padding: 30px;
+  border-radius: 20px;
 
   text-align: center;
+
+  box-shadow:
+    0 7px 28px rgba(0, 0, 0, 0.10);
 }
 
 .resultTitle {
   font-size: 12px;
 
-  letter-spacing: 3px;
-
   font-weight: 900;
+
+  line-height: 1.2;
+
+  letter-spacing: 3px;
 
   color: #9ca3af;
 }
 
 .resultScore {
-  margin-top: 8px;
+  margin-top: 7px;
 
-  font-size: 62px;
+  font-size: 64px;
 
   font-weight: 900;
+
+  line-height: 1;
 }
 
 .resultLabel {
+  margin-top: 5px;
+
   font-size: 11px;
+
+  font-weight: 700;
 
   letter-spacing: 2px;
 
@@ -605,46 +921,64 @@ select {
 }
 
 .resultStats {
-  margin-top: 25px;
+  margin-top: 27px;
 
   display: flex;
 
+  align-items: center;
+
   justify-content: center;
 
-  gap: 60px;
+  gap: 70px;
 }
 
 .resultStats div {
+  min-width: 75px;
+
   display: flex;
 
   flex-direction: column;
 
-  gap: 4px;
+  align-items: center;
+
+  gap: 5px;
 }
 
 .resultStats strong {
-  font-size: 24px;
+  font-size: 25px;
+
+  font-weight: 900;
+
+  line-height: 1;
 }
 
 .resultStats span {
   font-size: 11px;
 
+  line-height: 1.2;
+
   color: #9ca3af;
 }
 
 .resultMessage {
-  margin-top: 24px;
+  margin-top: 25px;
 
   font-size: 13px;
+
+  line-height: 1.4;
+
+  color: #e5e7eb;
 }
 
 
-/* ========================================
+/* =========================================================
    SAVE STATUS
-======================================== */
+========================================================= */
 
 .saveStatus {
-  margin-top: 15px;
+  width: min(1100px, calc(100% - 40px));
+
+  margin: 16px auto 0;
 
   text-align: center;
 
@@ -652,16 +986,20 @@ select {
 
   font-weight: 700;
 
+  line-height: 1.4;
+
   color: #555;
 }
 
 
-/* ========================================
+/* =========================================================
    FOOTER
-======================================== */
+========================================================= */
 
 .postFooter {
-  margin-top: 35px;
+  width: min(1100px, calc(100% - 40px));
+
+  margin: 35px auto 0;
 
   padding-top: 20px;
 
@@ -669,128 +1007,273 @@ select {
 
   display: flex;
 
+  align-items: center;
+
   justify-content: space-between;
+
+  gap: 20px;
 
   font-size: 11px;
 
-  color: #6b7280;
+  line-height: 1.4;
+
+  color: #64748b;
+}
+
+.postFooter strong {
+  font-weight: 800;
 }
 
 
-/* ========================================
+/* =========================================================
    TABLET
-======================================== */
+========================================================= */
 
 @media (max-width: 900px) {
 
-  .postHeader {
-    padding: 35px 25px;
+  /* HEADER */
+
+  .postHeaderInner {
+    width: calc(100% - 40px);
+
+    min-height: 200px;
   }
 
   .brandBox {
-    min-width: 190px;
+    width: 200px;
+
+    min-width: 200px;
+
     padding-right: 30px;
+  }
+
+  .brandMain {
+    font-size: 32px;
+  }
+
+  .brandSub {
+    font-size: 10px;
+
+    letter-spacing: 2.5px;
   }
 
   .headerTitle {
     padding-left: 30px;
   }
 
-  .participantGrid {
-    grid-template-columns: 1fr 1fr;
+  .headerTitle h1 {
+    font-size: 40px;
   }
 
-  .fieldName {
+
+  /* DATA KARYAWAN */
+
+  .participantGrid {
+    grid-template-columns:
+      1fr
+      1fr;
+  }
+
+  .fieldGroup:first-child {
     grid-column: 1 / -1;
   }
+
 }
 
 
-/* ========================================
+/* =========================================================
    MOBILE
-======================================== */
+========================================================= */
 
 @media (max-width: 700px) {
 
-  .postHeader {
+  /* ======================================================
+     HEADER
+  ====================================================== */
+
+  .postHeaderInner {
+    width: 100%;
+
     min-height: auto;
 
-    padding: 35px 20px;
+    padding: 30px 22px 35px;
+
+    display: flex;
 
     flex-direction: column;
 
-    align-items: center;
+    align-items: stretch;
 
     gap: 25px;
-
-    text-align: center;
   }
+
+
+  /* ======================================================
+     BUMJIN CENTER
+  ====================================================== */
 
   .brandBox {
     width: 100%;
 
     min-width: 0;
 
+    padding: 0 0 22px;
+
     border-right: none;
 
     border-bottom: 1px solid #4b5563;
-
-    padding-right: 0;
-
-    padding-bottom: 20px;
 
     text-align: center;
   }
 
   .brandMain {
-    font-size: 30px;
+    font-size: 31px;
 
     text-align: center;
   }
 
   .brandSub {
+    margin-top: 8px;
+
+    font-size: 11px;
+
+    letter-spacing: 2.5px;
+
     text-align: center;
   }
+
+
+  /* ======================================================
+     TITLE TETAP RATA KIRI
+  ====================================================== */
 
   .headerTitle {
     width: 100%;
 
     padding-left: 0;
 
-    text-align: center;
+    text-align: left;
   }
 
   .smallTitle {
-    text-align: center;
+    font-size: 12px;
+
+    letter-spacing: 2.5px;
+
+    text-align: left;
   }
 
   .headerTitle h1 {
-    font-size: 35px;
+    margin: 7px 0;
 
-    text-align: center;
+    font-size: 36px;
+
+    line-height: 1;
+
+    text-align: left;
   }
 
   .headerTitle p {
-    text-align: center;
+    font-size: 14px;
+
+    text-align: left;
   }
 
 
-  .participantCard,
-  .testCard,
-  .questionNavigator,
-  .resultCard {
+  /* ======================================================
+     DATA KARYAWAN
+  ====================================================== */
+
+  .participantCard {
     width: calc(100% - 30px);
 
-    padding: 20px;
+    margin-top: 20px;
+
+    padding: 25px 22px;
+
+    border-radius: 18px;
+  }
+
+  .sectionTitle {
+    margin-bottom: 22px;
+
+    font-size: 14px;
+
+    letter-spacing: 2px;
   }
 
   .participantGrid {
     grid-template-columns: 1fr;
+
+    gap: 17px;
   }
 
-  .fieldName {
+  .fieldGroup:first-child {
     grid-column: auto;
   }
+
+  .fieldGroup label {
+    font-size: 12px;
+  }
+
+  .fieldGroup input,
+  .fieldGroup select {
+    height: 52px;
+
+    font-size: 15px;
+  }
+
+
+  /* ======================================================
+     START BUTTON
+  ====================================================== */
+
+  .startTestButton {
+    height: 52px;
+
+    margin-top: 23px;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+  }
+
+
+  /* ======================================================
+     TEST CARD
+  ====================================================== */
+
+  .testCard {
+    width: calc(100% - 30px);
+
+    margin-top: 20px;
+
+    padding: 20px;
+
+    border-radius: 18px;
+  }
+
+
+  /* ======================================================
+     PROGRESS
+  ====================================================== */
+
+  .progressHeader strong {
+    font-size: 16px;
+  }
+
+  .progressHeader span {
+    font-size: 14px;
+  }
+
+  .progressPercent {
+    font-size: 12px;
+  }
+
+
+  /* ======================================================
+     QUESTION
+  ====================================================== */
 
   .postQuestionCard {
     width: 100%;
@@ -798,26 +1281,53 @@ select {
     padding: 30px 0;
   }
 
+  .questionTop {
+    gap: 12px;
+  }
+
+  .questionNumber {
+    width: 54px;
+    height: 54px;
+
+    border-radius: 13px;
+
+    font-size: 22px;
+  }
+
+  .questionLabel {
+    font-size: 11px;
+  }
+
   .questionText {
+    margin-top: 25px;
+
     font-size: 20px;
+
+    line-height: 1.5;
   }
 
-  .numberGrid {
-    grid-template-columns:
-      repeat(7, 1fr);
+  .answerLabel {
+    margin-top: 28px;
   }
 
-  .resultScore {
-    font-size: 52px;
+  .postAnswerInput {
+    height: 54px;
+
+    font-size: 15px;
   }
 
-  .resultStats {
-    gap: 25px;
-  }
+
+  /* ======================================================
+     NAVIGATION
+  ====================================================== */
 
   .navigationButtons,
   .submittedActions {
+    width: 100%;
+
     flex-direction: column;
+
+    gap: 10px;
   }
 
   .navigationButtons button,
@@ -827,11 +1337,150 @@ select {
     margin-left: 0;
   }
 
+
+  /* ======================================================
+     QUESTION NAVIGATOR
+  ====================================================== */
+
+  .questionNavigator {
+    width: calc(100% - 30px);
+
+    margin-top: 20px;
+
+    padding: 20px;
+
+    border-radius: 16px;
+  }
+
+  .numberGrid {
+    grid-template-columns:
+      repeat(7, 1fr);
+
+    gap: 8px;
+  }
+
+  .numberButton {
+    height: 40px;
+
+    font-size: 12px;
+  }
+
+
+  /* ======================================================
+     RESULT
+  ====================================================== */
+
+  .resultCard {
+    width: calc(100% - 30px);
+
+    margin-top: 20px;
+
+    padding: 27px 20px;
+
+    border-radius: 18px;
+  }
+
+  .resultScore {
+    font-size: 54px;
+  }
+
+  .resultStats {
+    gap: 25px;
+  }
+
+  .resultStats div {
+    min-width: 60px;
+  }
+
+  .resultStats strong {
+    font-size: 23px;
+  }
+
+
+  /* ======================================================
+     SAVE STATUS
+  ====================================================== */
+
+  .saveStatus {
+    width: calc(100% - 30px);
+
+    font-size: 12px;
+  }
+
+
+  /* ======================================================
+     FOOTER
+  ====================================================== */
+
   .postFooter {
     width: calc(100% - 30px);
 
     flex-direction: column;
 
+    align-items: flex-start;
+
     gap: 8px;
+
+    font-size: 10px;
   }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .postHeaderInner {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .brandMain {
+    font-size: 28px;
+  }
+
+  .brandSub {
+    font-size: 10px;
+
+    letter-spacing: 2px;
+  }
+
+  .headerTitle h1 {
+    font-size: 32px;
+  }
+
+  .smallTitle {
+    font-size: 11px;
+
+    letter-spacing: 2px;
+  }
+
+  .headerTitle p {
+    font-size: 13px;
+  }
+
+  .participantCard,
+  .testCard,
+  .questionNavigator,
+  .resultCard {
+    width: calc(100% - 20px);
+  }
+
+  .participantCard,
+  .testCard {
+    padding-left: 17px;
+    padding-right: 17px;
+  }
+
+  .questionText {
+    font-size: 19px;
+  }
+
+  .resultStats {
+    gap: 18px;
+  }
+
 }
